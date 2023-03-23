@@ -20,6 +20,10 @@ kotlin {
             useJUnitPlatform()
         }
     }
+//    js(IR) {
+//        nodejs()
+//        binaries.executable()
+//    }
     sourceSets {
         val jvmMain by getting
         val jvmTest by getting

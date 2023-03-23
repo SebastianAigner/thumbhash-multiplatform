@@ -1,3 +1,5 @@
+import KMath as Math
+
 object KotlinThumbHash {
     /**
      * Encodes an RGBA image to a ThumbHash. RGB should not be premultiplied by A.
