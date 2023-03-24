@@ -19,7 +19,7 @@ class ThumbHashTest {
 
     @Test
     fun shouldBehaveSame() {
-        repeat(10_000) {
+        repeat(100_000) {
             val seed = Random.nextInt()
             try {
                 executeTest(seed)

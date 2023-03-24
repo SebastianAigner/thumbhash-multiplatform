@@ -40,8 +40,8 @@ java.sourceSets.main {
     java.srcDir("src/jvmMain/kotlin")
 }
 
-afterEvaluate {
-    println(sourceSets.names)
+java.sourceSets.test {
+    java.srcDir("src/jvmTest/kotlin")
 }
 
 application {
