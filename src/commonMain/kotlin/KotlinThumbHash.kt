@@ -267,8 +267,8 @@ object KotlinThumbHash {
         return lx.toFloat() / ly.toFloat()
     }
 
-    class Image(var width: Int, var height: Int, var rgba: ByteArray)
-    class RGBA(var r: Float, var g: Float, var b: Float, var a: Float)
+    data class Image(var width: Int, var height: Int, var rgba: ByteArray)
+    data class RGBA(var r: Float, var g: Float, var b: Float, var a: Float)
     private class Channel internal constructor(var nx: Int, var ny: Int) {
         var dc = 0f
         var ac: FloatArray
