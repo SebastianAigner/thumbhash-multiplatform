@@ -1,4 +1,4 @@
-# Kotlin/Multiplatform port of [thumbhash](https://github.com/evanw/thumbhash/)
+# Kotlin Multiplatform port of [thumbhash](https://github.com/evanw/thumbhash/)
 
 Built on top of Kotlin Multiplatform.
 
