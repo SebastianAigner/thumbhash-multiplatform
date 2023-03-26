@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import kotlinx.coroutines.delay
 import java.io.File
 import javax.imageio.ImageIO
 
@@ -30,7 +31,10 @@ fun main() = application {
             Row(Modifier.fillMaxSize(), Arrangement.spacedBy(5.dp)) {
                 Column {
                     Text("Skia Image (Multiplatform)")
-                    ThumbhashImage(hash)
+                    ThumbhashImage(hash) {
+                        delay(2000)
+                        hex.toComposeImageBitmap()
+                    }
                 }
                 Column {
                     Text("BufferedImage")

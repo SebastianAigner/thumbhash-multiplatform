@@ -9,3 +9,10 @@ Built on top of Kotlin Multiplatform.
   - `@Composable ThumbhashImage` ![](https://img.shields.io/badge/implementation-in%20progress-yellow)
 
 ![](sample.png)
+<details><summary>Animated example showcasing the Composable</summary>
+<p>
+
+![](animated_example.gif)
+
+</p>
+</details>

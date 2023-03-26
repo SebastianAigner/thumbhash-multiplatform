@@ -1,7 +1,9 @@
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.unit.dp
 import org.jetbrains.skia.ColorAlphaType
@@ -22,10 +24,26 @@ fun turnIntoSkiaImage(width: Int, height: Int, ba: ByteArray): Image {
 }
 
 @Composable
-fun ThumbhashImage(thumbhash: Thumbhash) {
-    val image = remember { turnIntoSkiaImage(thumbhash.width, thumbhash.height, thumbhash.image().rgba) }
-    Image(
-        bitmap = image.toComposeImageBitmap(),
-        modifier = Modifier.size(200.dp), contentDescription = null
-    )
+fun ThumbhashImage(thumbhash: Thumbhash, loadImage: suspend () -> ImageBitmap?) {
+    var image by remember {
+        mutableStateOf(
+            turnIntoSkiaImage(
+                thumbhash.width,
+                thumbhash.height,
+                thumbhash.image().rgba
+            ).toComposeImageBitmap()
+        )
+    }
+    LaunchedEffect(thumbhash) {
+        val newImg = loadImage()
+        if (newImg != null) {
+            image = newImg
+        }
+    }
+    Crossfade(targetState = image) {
+        Image(
+            bitmap = it,
+            modifier = Modifier.size(200.dp), contentDescription = null
+        )
+    }
 }
