@@ -2,15 +2,8 @@ import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
-
-@JvmInline
-value class Thumbhash(val hash: ByteArray) {
-    override fun toString(): String {
-        return hash.joinToString(" ") {
-            it.toUByte().toString(16).padStart(2,'0')
-        }
-    }
-}
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
 fun BufferedImage.toHash(): Thumbhash {
     val newImage = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
@@ -61,16 +54,19 @@ fun BufferedImage.resize(w: Int, h: Int): BufferedImage {
     return newImage
 }
 
+@OptIn(ExperimentalTime::class)
 fun main() {
-    val hex = ImageIO.read(File("plant.png"))
-    val hash = hex.toHash()
-    println(hash)
-    val decodedImage = KotlinThumbHash.thumbHashToRGBA(hash.hash)
-    val renderedImage = renderImage(decodedImage)
-    ImageIO.write(renderedImage, "png", File("blurred.png"))
+    println(measureTime {
+        val hex = ImageIO.read(File("plant.png"))
+        val hash = hex.toHash()
+        println(hash)
+        val decodedImage = KotlinThumbHash.thumbHashToRGBA(hash.hash)
+        val renderedImage = renderImage(decodedImage)
+        ImageIO.write(renderedImage, "png", File("blurred.png"))
+    })
 }
 
-private fun renderImage(rgbaImage: KotlinThumbHash.Image): BufferedImage {
+fun renderImage(rgbaImage: KotlinThumbHash.Image): BufferedImage {
     val w = rgbaImage.width
     val h = rgbaImage.height
     val render = BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB)
@@ -83,9 +79,9 @@ private fun renderImage(rgbaImage: KotlinThumbHash.Image): BufferedImage {
         val a = byteArr[hashIx + 3].toUByte()
         val argb: Int =
             (a.toInt() shl (3 * 8)) or
-                (r.toInt() shl (2 * 8)) or
-                (g.toInt() shl (1 * 8)) or
-                (b.toInt() shl (0 * 8))
+                    (r.toInt() shl (2 * 8)) or
+                    (g.toInt() shl (1 * 8)) or
+                    (b.toInt() shl (0 * 8))
         argb
     }
 
